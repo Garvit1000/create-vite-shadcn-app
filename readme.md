@@ -12,25 +12,25 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 - 🧭 [React Router](https://reactrouter.com/) for navigation
 - 📦 [Zustand](https://zustand-demo.pmnd.rs/) for state management
 - ⚡️ Example components and pages included
-- 🔧 TypeScript ready
+- 🔧 connects to git 
 
 ## Quick Start
 
 ```bash
 # Using npm
-npm create shadcn-starter@latest
+npm create-vite-shadcn-app my-app
 
 # Using yarn
-yarn create shadcn-starter
+yarn create create-vite-shadcn-app
 
 # Using pnpm
-pnpm create shadcn-starter
+pnpm create create-vite-shadcn-app
 ```
 
 Or specify a name for your project:
 
 ```bash
-npm create shadcn-starter@latest my-app
+npm create screate-vite-shadcn-app my-app
 ```
 
 ## What's Included
