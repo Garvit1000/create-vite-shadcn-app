@@ -17,8 +17,8 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 ## Quick Start
 
 ```bash
-# Using npm
-npm create-vite-shadcn-app my-app
+# Using npx
+npx create-vite-shadcn-app my-app
 
 # Using yarn
 yarn create create-vite-shadcn-app
@@ -30,7 +30,7 @@ pnpm create create-vite-shadcn-app
 Or specify a name for your project:
 
 ```bash
-npm create screate-vite-shadcn-app my-app
+npx create screate-vite-shadcn-app my-app
 ```
 
 ## What's Included
