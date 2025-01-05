@@ -30,7 +30,7 @@ pnpm create create-vite-shadcn-app
 Or specify a name for your project:
 
 ```bash
-npx create screate-vite-shadcn-app my-app
+npx create create-vite-shadcn-app my-app
 ```
 
 ## What's Included
