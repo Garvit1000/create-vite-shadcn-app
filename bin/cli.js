@@ -9,8 +9,62 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const PACKAGE_ROOT = path.join(__dirname, '..');
+
+// Helper function to detect package manager
+function detectPackageManager() {
+  const userAgent = process.env.npm_config_user_agent;
+  if (userAgent) {
+    if (userAgent.startsWith('yarn')) return 'yarn';
+    if (userAgent.startsWith('pnpm')) return 'pnpm';
+  }
+  return 'npm';
+}
+
+// Helper function to install dependencies
+async function installDependencies(projectDir, packageManager, spinner) {
+  try {
+    // Define commands for different package managers
+    const commands = {
+      npm: {
+        install: 'npm install',
+        installDev: 'npm install -D',
+        run: 'npm run'
+      },
+      pnpm: {
+        install: 'pnpm install',
+        installDev: 'pnpm install -D',
+        run: 'pnpm'
+      },
+      yarn: {
+        install: 'yarn',
+        installDev: 'yarn add -D',
+        run: 'yarn'
+      }
+    };
+
+    // Check if the selected package manager is installed
+    try {
+      execSync(`${packageManager} --version`, { stdio: 'ignore' });
+    } catch (error) {
+      spinner.fail(`${packageManager} is not installed. Please install it first.`);
+      process.exit(1);
+    }
+
+    // Install dependencies
+    spinner.text = 'Installing dependencies...';
+    execSync(commands[packageManager].install, {
+      cwd: projectDir,
+      stdio: 'inherit'
+    });
+
+    return true;
+  } catch (error) {
+    spinner.fail('Failed to install dependencies');
+    console.error(error);
+    return false;
+  }
+}
 
 async function init() {
   let projectDir;
@@ -21,7 +75,7 @@ async function init() {
   try {
     // Set up command line interface
     program
-      .name('create-vite-shadcn-app')
+      .name('create-shadcn-starter')
       .description('Scaffold a new Vite + Tailwind + shadcn/ui application')
       .argument('[dir]', 'Directory to create the project in')
       .parse(process.argv);
@@ -73,6 +127,7 @@ async function init() {
           { title: 'pnpm', value: 'pnpm' },
           { title: 'yarn', value: 'yarn' },
         ],
+        initial: detectPackageManager() === 'npm' ? 0 : detectPackageManager() === 'pnpm' ? 1 : 2
       },
       {
         type: 'multiselect',
@@ -138,6 +193,7 @@ async function init() {
         '@radix-ui/react-slot': '^1.0.2',
         '@radix-ui/react-dialog': '^1.0.4',
         '@radix-ui/react-dropdown-menu': '^2.0.5',
+        '@radix-ui/react-navigation-menu': '^1.2.3',
         '@radix-ui/react-label': '^2.0.2',
         '@radix-ui/react-select': '^1.2.2',
         '@radix-ui/react-toast': '^1.1.4',
@@ -187,29 +243,19 @@ async function init() {
     }
 
     // Install dependencies
-    spinner.text = 'Installing dependencies...';
+    const installSuccess = await installDependencies(projectDir, packageManager, spinner);
     
-    const installCommand = packageManager === 'npm' ? 'npm install' :
-                         packageManager === 'pnpm' ? 'pnpm install' :
-                         'yarn';
-    
-    try {
-      execSync(installCommand, { cwd: projectDir, stdio: 'inherit' });
-    } catch (error) {
-      spinner.fail('Failed to install dependencies');
-      throw error;
+    if (installSuccess) {
+      spinner.succeed(chalk.green('Project created successfully!'));
+      
+      // Show next steps
+      console.log('\nNext steps:');
+      if (projectDir !== '.') {
+        console.log(chalk.cyan(`  cd ${projectDir}`));
+      }
+      console.log(chalk.cyan(`  ${packageManager} run dev`));
+      console.log('\nHappy coding! 🎉\n');
     }
-
-    // Project creation complete
-    spinner.succeed(chalk.green('Project created successfully!'));
-    
-    // Show next steps
-    console.log('\nNext steps:');
-    if (projectDir !== '.') {
-      console.log(chalk.cyan(`  cd ${projectDir}`));
-    }
-    console.log(chalk.cyan(`  ${packageManager} run dev`));
-    console.log('\nHappy coding! 🎉\n');
 
   } catch (error) {
     console.error(chalk.red('Error:'), error);
