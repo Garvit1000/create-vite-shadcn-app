@@ -20,11 +20,10 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 # Using npx
 npx create-vite-shadcn-app my-app
 
-# Using yarn
-yarn create create-vite-shadcn-app
+# select one choice
+it will give option to choose from yarn pnpm, npm selection as you like
 
-# Using pnpm
-pnpm create create-vite-shadcn-app
+
 ```
 
 Or specify a name for your project:
