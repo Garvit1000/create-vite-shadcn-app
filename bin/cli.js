@@ -162,6 +162,7 @@ async function init() {
       'tailwind.config.js',
       'vite.config.js',
       'index.html',
+      'jsconfig.json',
     ];
 
     configFiles.forEach(file => {

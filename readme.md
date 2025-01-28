@@ -61,6 +61,7 @@ my-app/
 │   ├── App.jsx
 │   └── main.jsx
 ├── index.html
+├── jsconfig.json
 ├── vite.config.js
 ├── tailwind.config.js
 └── package.json
