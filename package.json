@@ -1,6 +1,6 @@
 {
   "name": "create-vite-shadcn-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool to scaffold a Vite + React + Tailwind + shadcn/ui application",
   "main": "index.js",
   "bin": {
