@@ -5,10 +5,13 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 ## Features
 
 - 🚀 [Vite](https://vitejs.dev/) for fast development and building
-- 🎨 [shadcn/ui](https://ui.shadcn.com/) components pre-configured
+- 🎨 [shadcn/ui](https://ui.shadcn.com/) components pre-configured with latest versions
 - 🌙 Dark mode support out of the box
-- 🎯 [Tailwind CSS](https://tailwindcss.com/) for styling
-- 📱 Responsive design ready
+- 🎯 [Tailwind CSS v4](https://tailwindcss.com/) with advanced features:
+  - Container queries support
+  - Typography plugin
+  - Enhanced responsive design
+- 📱 Modern responsive design with latest Tailwind features
 - 🧭 [React Router](https://reactrouter.com/) for navigation
 - 📦 [Zustand](https://zustand-demo.pmnd.rs/) for state management
 - ⚡️ Example components and pages included
@@ -29,7 +32,7 @@ it will give option to choose from yarn pnpm, npm selection as you like
 Or specify a name for your project:
 
 ```bash
-npx create create-vite-shadcn-app my-app
+npx create-vite-shadcn-app my-app
 ```
 
 ## What's Included

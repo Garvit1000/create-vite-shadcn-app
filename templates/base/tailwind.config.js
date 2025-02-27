@@ -56,6 +56,11 @@ export default {
         },
       },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+      require("tailwindcss-animate"),
+      // Additional Tailwind v4 features
+      require('@tailwindcss/container-queries'),
+      require('@tailwindcss/typography')
+    ],
   }
   

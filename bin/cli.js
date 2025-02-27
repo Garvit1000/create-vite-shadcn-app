@@ -192,37 +192,39 @@ async function init() {
         'react': '^18.2.0',
         'react-dom': '^18.2.0',
         '@radix-ui/react-slot': '^1.0.2',
-        '@radix-ui/react-dialog': '^1.0.4',
-        '@radix-ui/react-dropdown-menu': '^2.0.5',
+        '@radix-ui/react-dialog': '^1.0.5',
+        '@radix-ui/react-dropdown-menu': '^2.0.6',
         '@radix-ui/react-navigation-menu': '^1.2.3',
         '@radix-ui/react-label': '^2.0.2',
-        '@radix-ui/react-select': '^1.2.2',
-        '@radix-ui/react-toast': '^1.1.4',
+        '@radix-ui/react-select': '^2.0.0',
+        '@radix-ui/react-toast': '^1.1.5',
         'class-variance-authority': '^0.7.0',
-        'clsx': '^2.0.0',
-        'tailwind-merge': '^2.0.0',
+        'clsx': '^2.1.0',
+        'tailwind-merge': '^2.2.1',
         'tailwindcss-animate': '^1.0.7',
-        'lucide-react': '^0.263.1'
+        'lucide-react': '^0.330.0'
       },
       devDependencies: {
-        '@types/node': '^20.4.5',
-        '@types/react': '^18.2.15',
-        '@types/react-dom': '^18.2.7',
-        '@vitejs/plugin-react': '^4.0.3',
-        'autoprefixer': '^10.4.14',
-        'postcss': '^8.4.27',
-        'tailwindcss': '^3.3.3',
-        'vite': '^4.4.5'
+        '@types/node': '^20.11.19',
+        '@types/react': '^18.2.56',
+        '@types/react-dom': '^18.2.19',
+        '@vitejs/plugin-react': '^4.2.1',
+        'autoprefixer': '^10.4.17',
+        'postcss': '^8.4.35',
+        'tailwindcss': '^4.0.0',
+        '@tailwindcss/container-queries': '^1.0.0',
+        '@tailwindcss/typography': '^0.5.10',
+        'vite': '^5.1.3'
       }
     };
 
     // Add optional dependencies based on selected features
     if (features.includes('router')) {
-      packageJson.dependencies['react-router-dom'] = '^6.15.0';
+      packageJson.dependencies['react-router-dom'] = '^6.22.0';
     }
 
     if (features.includes('zustand')) {
-      packageJson.dependencies['zustand'] = '^4.4.1';
+      packageJson.dependencies['zustand'] = '^4.5.0';
     }
 
     // Write package.json
