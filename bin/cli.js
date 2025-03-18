@@ -211,8 +211,7 @@ async function init() {
         '@vitejs/plugin-react': '^4.2.1',
         'autoprefixer': '^10.4.17',
         'postcss': '^8.4.35',
-        'tailwindcss': '^4.0.0',
-        '@tailwindcss/container-queries': '^1.0.0',
+        'tailwindcss': '^3.4.1',
         '@tailwindcss/typography': '^0.5.10',
         'vite': '^5.1.3'
       }
