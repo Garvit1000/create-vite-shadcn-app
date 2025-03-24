@@ -17,6 +17,7 @@ function detectPackageManager() {
   if (userAgent) {
     if (userAgent.startsWith('yarn')) return 'yarn';
     if (userAgent.startsWith('pnpm')) return 'pnpm';
+    if (userAgent.startsWith('bun')) return 'bun';
   }
   return 'npm';
 }
@@ -40,12 +41,34 @@ async function installDependencies(projectDir, packageManager, spinner) {
         install: 'yarn',
         installDev: 'yarn add -D',
         run: 'yarn'
+      },
+      bun: {
+        install: 'bun install',
+        installDev: 'bun add -d',
+        run: 'bun run'
       }
     };
 
     // Check if the selected package manager is installed
     try {
-      execSync(`${packageManager} --version`, { stdio: 'ignore' });
+      if (packageManager === 'bun') {
+        // Special handling for Bun
+        try {
+          execSync('bun --version', { stdio: 'ignore' });
+        } catch (error) {
+          spinner.warn('Bun is not detected. Attempting to install Bun...');
+          try {
+            // Try to install Bun if not present
+            execSync('npm install -g bun', { stdio: 'inherit' });
+            spinner.succeed('Bun installed successfully!');
+          } catch (bunInstallError) {
+            spinner.fail('Failed to install Bun. Please install it manually: https://bun.sh/docs/installation');
+            process.exit(1);
+          }
+        }
+      } else {
+        execSync(`${packageManager} --version`, { stdio: 'ignore' });
+      }
     } catch (error) {
       spinner.fail(`${packageManager} is not installed. Please install it first.`);
       process.exit(1);
@@ -126,8 +149,12 @@ async function init() {
           { title: 'npm', value: 'npm' },
           { title: 'pnpm', value: 'pnpm' },
           { title: 'yarn', value: 'yarn' },
+          { title: 'bun', value: 'bun' },
         ],
-        initial: detectPackageManager() === 'npm' ? 0 : detectPackageManager() === 'pnpm' ? 1 : 2
+        initial: detectPackageManager() === 'npm' ? 0 : 
+                 detectPackageManager() === 'pnpm' ? 1 : 
+                 detectPackageManager() === 'yarn' ? 2 : 
+                 detectPackageManager() === 'bun' ? 3 : 0
       },
       {
         type: 'multiselect',
@@ -137,7 +164,8 @@ async function init() {
           { title: 'React Router', value: 'router', selected: true },
           { title: 'Zustand (State Management)', value: 'zustand', selected: true },
           { title: 'Dark Mode', value: 'darkMode', selected: true },
-          { title: 'Example Components', value: 'examples', selected: true }
+          { title: 'Example Components', value: 'examples', selected: true },
+          { title: 'Container Queries', value: 'containerQueries', selected: false }
         ],
       }
     ]);
@@ -224,6 +252,25 @@ async function init() {
 
     if (features.includes('zustand')) {
       packageJson.dependencies['zustand'] = '^4.5.0';
+    }
+
+    // Add container queries if selected
+    if (features.includes('containerQueries')) {
+      packageJson.devDependencies['@tailwindcss/container-queries'] = '^0.1.1';
+      
+      // Update tailwind config to include container queries
+      const tailwindConfigPath = path.join(projectDir, 'tailwind.config.js');
+      if (fs.existsSync(tailwindConfigPath)) {
+        let tailwindConfig = fs.readFileSync(tailwindConfigPath, 'utf8');
+        // Add container queries to plugins if not already there
+        if (!tailwindConfig.includes('@tailwindcss/container-queries')) {
+          tailwindConfig = tailwindConfig.replace(
+            'plugins: [',
+            'plugins: [\n      require("@tailwindcss/container-queries"),'
+          );
+          fs.writeFileSync(tailwindConfigPath, tailwindConfig);
+        }
+      }
     }
 
     // Write package.json

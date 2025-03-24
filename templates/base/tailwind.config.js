@@ -58,8 +58,8 @@ export default {
     },
     plugins: [
       require("tailwindcss-animate"),
-      // Additional Tailwind features
       require('@tailwindcss/typography')
+      // Container queries plugin should only be added if it's in the dependencies
     ],
   }
   

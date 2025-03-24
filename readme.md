@@ -8,7 +8,7 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 - 🎨 [shadcn/ui](https://ui.shadcn.com/) components pre-configured with latest versions
 - 🌙 Dark mode support out of the box
 - 🎯 [Tailwind CSS v4](https://tailwindcss.com/) with advanced features:
-  - Container queries support
+  - Container queries support (optional)
   - Typography plugin
   - Enhanced responsive design
 - 📱 Modern responsive design with latest Tailwind features
@@ -16,6 +16,7 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 - 📦 [Zustand](https://zustand-demo.pmnd.rs/) for state management
 - ⚡️ Example components and pages included
 - 🔧 connects to git 
+- 📦 Support for npm, yarn, pnpm, and bun package managers
 
 ## Quick Start
 
@@ -24,9 +25,7 @@ A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and 
 npx create-vite-shadcn-app my-app
 
 # select one choice
-it will give option to choose from yarn pnpm, npm selection as you like
-
-
+it will give option to choose from npm, yarn, pnpm, or bun selection as you like
 ```
 
 Or specify a name for your project:
@@ -83,6 +82,8 @@ npm run dev
 yarn dev
 # or
 pnpm dev
+# or
+bun run dev
 ```
 
 Visit `http://localhost:5173` to see your application.
@@ -121,6 +122,20 @@ Edit the CSS variables in `src/index.css` to customize your theme:
 }
 ```
 
+## Release Notes
+
+### v1.1.0 (Latest)
+- Added support for Bun package manager
+- Fixed container queries compatibility issue
+- Made container queries an optional feature
+- Improved error handling for package installation
+- Updated dependencies to latest versions
+
+### v1.0.10
+- Initial public release
+- Support for npm, yarn, and pnpm
+- Basic shadcn/ui components setup
+
 ## License
 
 MIT
@@ -140,3 +155,30 @@ MIT
 - [Tailwind CSS](https://tailwindcss.com/)
 - [React Router](https://reactrouter.com/)
 - [Zustand](https://zustand-demo.pmnd.rs/)
+- [Bun](https://bun.sh/)
+
+## Bun Compatibility
+
+This starter template is fully compatible with [Bun](https://bun.sh/), a fast JavaScript runtime and package manager. When using Bun:
+
+- Installation is faster due to Bun's optimized package resolution
+- Development server starts up quicker
+- Build times are reduced
+
+To use Bun with this template, select "bun" as your package manager during setup. If Bun is not installed, the CLI will attempt to install it for you.
+
+### Bun-specific Commands
+
+```bash
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+```

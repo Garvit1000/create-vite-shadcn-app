@@ -1,6 +1,6 @@
 {
   "name": "create-vite-shadcn-app",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "CLI tool to scaffold a Vite + React + Tailwind + shadcn/ui application",
   "main": "index.js",
   "bin": {
@@ -21,7 +21,8 @@
     "cli",
     "create-shadcn",
     "pnpm",
-    "yarn"
+    "yarn",
+    "bun"
   ],
   "author": "garvit joshi",
   "license": "MIT",
