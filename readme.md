@@ -124,7 +124,7 @@ Edit the CSS variables in `src/index.css` to customize your theme:
 
 ## Release Notes
 
-### v1.1.0 (Latest)
+### v1.1.1 (Latest)
 - Added support for Bun package manager
 - Fixed container queries compatibility issue
 - Made container queries an optional feature
