@@ -1,6 +1,6 @@
 # create-shadcn-starter
 
-A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and shadcn/ui components. Get started with a fully configured development environment in seconds.
+A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and shadcn/ui components. Get started with a fully configured development environment in seconds. New updates included
 
 ## Features
 
