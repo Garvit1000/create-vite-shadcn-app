@@ -4,9 +4,9 @@ import { ThemeToggle } from './components/ThemeToggle';
 import { useTheme } from './store/theme';
 import { Button } from './components/ui/button';
 
-// Lazy load route components
-const Home = lazy(() => import('./pages/Home'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
+// Lazy load route components with explicit paths
+const Home = lazy(() => import('@/pages/Home.jsx'));
+const Dashboard = lazy(() => import('@/pages/Dashboard.jsx'));
 
 // Loading fallback component
 const PageLoader = () => (

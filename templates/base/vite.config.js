@@ -2,11 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
-import dynamicImport from '@rollup/plugin-dynamic-import-vars';
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Enable fast refresh for Bun
+      fastRefresh: true
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
@@ -27,8 +29,7 @@ export default defineConfig({
           }
         ]
       }
-    }),
-    dynamicImport()
+    })
   ],
   resolve: {
     alias: {
@@ -50,6 +51,10 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
+    include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: [],
+    esbuildOptions: {
+      target: 'esnext'
+    }
   }
 });

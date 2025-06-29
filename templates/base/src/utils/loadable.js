@@ -18,5 +18,5 @@ const DefaultLoadingComponent = () => (
   </div>
 );
 
-// Example usage:
-// const MyComponent = loadable(() => import('./MyComponent'));
+// Example usage with explicit path:
+// const MyComponent = loadable(() => import('@/components/MyComponent.jsx'));
