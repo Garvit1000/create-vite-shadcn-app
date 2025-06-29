@@ -1,9 +1,8 @@
-# create-shadcn-starter
+# Enhanced Vite + React + Tailwind + shadcn/ui 
 
 A CLI tool to quickly scaffold a React application with Vite, Tailwind CSS, and shadcn/ui components. Get started with a fully configured development environment in seconds. New updates included
 
 ## Features
-
 - 🚀 [Vite](https://vitejs.dev/) for fast development and building
 - 🎨 [shadcn/ui](https://ui.shadcn.com/) components pre-configured with latest versions
 - 🌙 Dark mode support out of the box
@@ -33,44 +32,7 @@ Or specify a name for your project:
 ```bash
 npx create-vite-shadcn-app my-app
 ```
-
-## What's Included
-
-- Configured project structure
-- Pre-built components from shadcn/ui
-- Dark mode toggle
-- Example pages (Home and Dashboard)
-- React Router setup
-- State management with Zustand
-- Tailwind CSS configuration
-- Ready-to-use development environment
-
-## Project Structure
-
-```
-my-app/
-├── src/
-│   ├── components/
-│   │   ├── ui/          # shadcn/ui components
-│   │   └── ThemeToggle.jsx
-│   ├── pages/
-│   │   ├── Home.jsx
-│   │   └── Dashboard.jsx
-│   ├── store/
-│   │   └── theme.js     # Dark mode state
-│   ├── lib/
-│   │   └── utils.js     # Utility functions
-│   ├── App.jsx
-│   └── main.jsx
-├── index.html
-├── jsconfig.json
-├── vite.config.js
-├── tailwind.config.js
-└── package.json
-```
-
 ## Development
-
 After creating your project:
 
 ```bash
@@ -85,68 +47,98 @@ pnpm dev
 # or
 bun run dev
 ```
-
 Visit `http://localhost:5173` to see your application.
 
-## Available Scripts
 
-- `dev` - Start the development server
-- `build` - Build for production
-- `preview` - Preview production build
-- `lint` - Lint your code
+## Project Structure
 
-## Customization
-
-### Adding New Components
-
-1. Visit [shadcn/ui](https://ui.shadcn.com/docs/components)
-2. Choose a component
-3. Follow the installation instructions
-4. The component will be added to your `components/ui` directory
-
-### Modifying Theme
-
-Edit the CSS variables in `src/index.css` to customize your theme:
-
-```css
-:root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  /* ... other variables */
-}
-
-.dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  /* ... other variables */
-}
+```
+src/
+├── assets/         # Static assets (images, fonts, etc.)
+├── components/     # React components
+│   ├── common/     # Reusable components
+│   ├── layout/     # Layout components
+│   └── ui/         # shadcn/ui components
+├── hooks/          # Custom React hooks
+├── pages/          # Page components
+├── services/       # API services and external integrations
+├── store/          # State management (Zustand)
+├── utils/          # Utility functions
+├── constants/      # Constants and configuration
+└── types/          # TypeScript types/interfaces
 ```
 
-## Release Notes
+## Performance Optimizations
 
-### v1.1.1 (Latest)
-- Added support for Bun package manager
-- Fixed container queries compatibility issue
-- Made container queries an optional feature
-- Improved error handling for package installation
-- Updated dependencies to latest versions
+### Code Splitting & Lazy Loading
+- Components are lazy loaded using `React.lazy()` and `Suspense`
+- Use the `loadable` utility for easy component lazy loading:
+```jsx
+const MyComponent = loadable(() => import('./MyComponent'));
+```
 
-### v1.0.10
-- Initial public release
-- Support for npm, yarn, and pnpm
-- Basic shadcn/ui components setup
+### Image Optimization
+- Use the `OptimizedImage` component for automatic image optimization:
+```jsx
+import OptimizedImage from '@/components/common/OptimizedImage';
 
-## License
+<OptimizedImage 
+  src="example.jpg"
+  alt="Example"
+  width={800}
+  height={600}
+/>
+```
 
-MIT
+### PWA Support
+- Progressive Web App (PWA) ready
+- Offline support and caching
+- Customizable manifest.json
+
+## Development Tools
+
+### ESLint & Prettier
+- ESLint configured with React best practices
+- Prettier for consistent code formatting
+- Pre-commit hooks using husky
+
+### Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Format code
+npm run format
+
+# Lint code
+npm run lint
+```
+
+### Performance Utilities
+
+The project includes several performance optimization utilities:
+
+1. `debounce`: Limit function call frequency
+2. `memoize`: Cache expensive computations
+3. `chunkArray`: Split arrays for pagination
+4. `createIntersectionObserver`: Lazy loading utility
+
+## Best Practices
+
+1. Use the provided folder structure to maintain code organization
+2. Implement lazy loading for route components and large features
+3. Optimize images using the OptimizedImage component
+4. Use performance utilities for expensive operations
+5. Follow ESLint and Prettier guidelines
+6. Write meaningful commit messages
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Feel free to open issues and pull requests for improvements!
 
 ## Acknowledgments
 
@@ -182,3 +174,7 @@ bun run build
 # Preview production build
 bun run preview
 ```
+
+## License
+
+MIT

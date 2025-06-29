@@ -1,9 +1,19 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { ThemeToggle } from './components/ThemeToggle';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
 import { useTheme } from './store/theme';
 import { Button } from './components/ui/button';
+
+// Lazy load route components
+const Home = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[50vh]">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  </div>
+);
 
 function App() {
   const { theme } = useTheme();
@@ -32,10 +42,12 @@ function App() {
           </header>
           
           <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            </Suspense>
           </main>
           
           <footer className="border-t py-6 md:py-0">

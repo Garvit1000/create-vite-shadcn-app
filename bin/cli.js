@@ -165,7 +165,11 @@ async function init() {
           { title: 'Zustand (State Management)', value: 'zustand', selected: true },
           { title: 'Dark Mode', value: 'darkMode', selected: true },
           { title: 'Example Components', value: 'examples', selected: true },
-          { title: 'Container Queries', value: 'containerQueries', selected: false }
+          { title: 'Container Queries', value: 'containerQueries', selected: false },
+          { title: 'ESLint & Prettier', value: 'linting', selected: true },
+          { title: 'Code Splitting & Lazy Loading', value: 'codeSplitting', selected: true },
+          { title: 'PWA Support', value: 'pwa', selected: false },
+          { title: 'Image Optimization', value: 'imageOptimization', selected: true }
         ],
       }
     ]);
@@ -241,7 +245,18 @@ async function init() {
         'postcss': '^8.4.35',
         'tailwindcss': '^3.4.1',
         '@tailwindcss/typography': '^0.5.10',
-        'vite': '^5.1.3'
+        'vite': '^5.1.3',
+        'eslint': '^8.56.0',
+        'eslint-plugin-react': '^7.33.2',
+        'eslint-plugin-react-hooks': '^4.6.0',
+        'eslint-plugin-import': '^2.29.1',
+        'eslint-config-prettier': '^9.1.0',
+        'prettier': '^3.2.5',
+        'husky': '^9.0.11',
+        'lint-staged': '^15.2.2',
+        'sharp': '^0.33.2',
+        'vite-plugin-pwa': '^0.17.4',
+        '@rollup/plugin-dynamic-import-vars': '^2.1.2'
       }
     };
 
@@ -279,16 +294,115 @@ async function init() {
       JSON.stringify(packageJson, null, 2)
     );
 
-    // Initialize git repository
+    // Initialize git repository and setup husky
     try {
       execSync('git init', { cwd: projectDir });
+      
       // Create .gitignore
       fs.writeFileSync(
         path.join(projectDir, '.gitignore'),
-        'node_modules\n.DS_Store\ndist\n.env\n*.local'
+        'node_modules\n.DS_Store\ndist\n.env\n*.local\n.husky\n.eslintcache'
       );
+
+      // Create ESLint config
+      fs.writeFileSync(
+        path.join(projectDir, '.eslintrc.json'),
+        JSON.stringify({
+          "extends": [
+            "eslint:recommended",
+            "plugin:react/recommended",
+            "plugin:react-hooks/recommended",
+            "prettier"
+          ],
+          "plugins": ["react", "import"],
+          "parserOptions": {
+            "ecmaVersion": 2022,
+            "sourceType": "module",
+            "ecmaFeatures": {
+              "jsx": true
+            }
+          },
+          "settings": {
+            "react": {
+              "version": "detect"
+            }
+          },
+          "rules": {
+            "react/react-in-jsx-scope": "off",
+            "react/prop-types": "off"
+          }
+        }, null, 2)
+      );
+
+      // Create Prettier config
+      fs.writeFileSync(
+        path.join(projectDir, '.prettierrc'),
+        JSON.stringify({
+          "semi": true,
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5"
+        }, null, 2)
+      );
+
+      // Create enhanced folder structure
+      const directories = [
+        'src/assets',
+        'src/components/common',
+        'src/components/layout',
+        'src/hooks',
+        'src/utils',
+        'src/services',
+        'src/constants',
+        'src/types'
+      ];
+
+      directories.forEach(dir => {
+        fs.mkdirSync(path.join(projectDir, dir), { recursive: true });
+      });
+
+      // Add utility functions
+      fs.writeFileSync(
+        path.join(projectDir, 'src/utils/loadable.js'),
+        `import { lazy, Suspense } from 'react';
+
+export const loadable = (importFunc) => {
+  const LazyComponent = lazy(importFunc);
+  return (props) => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LazyComponent {...props} />
+    </Suspense>
+  );
+};`
+      );
+
+      // Update package.json scripts
+      packageJson.scripts = {
+        ...packageJson.scripts,
+        "lint": "eslint . --ext .js,.jsx --fix",
+        "format": "prettier --write .",
+        "prepare": "husky"
+      };
+
+      // Add lint-staged configuration
+      packageJson["lint-staged"] = {
+        "*.{js,jsx}": [
+          "eslint --fix",
+          "prettier --write"
+        ],
+        "*.{json,md}": [
+          "prettier --write"
+        ]
+      };
+
+      // Write updated package.json
+      fs.writeFileSync(
+        path.join(projectDir, 'package.json'),
+        JSON.stringify(packageJson, null, 2)
+      );
+
     } catch (error) {
-      spinner.warn('Could not initialize git repository');
+      spinner.warn('Could not initialize git repository and configuration files');
     }
 
     // Install dependencies
