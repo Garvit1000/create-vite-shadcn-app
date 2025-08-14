@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend API with PostgreSQL and Prisma",
+  "main": "server.js",
+  "type": "module",
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "db:migrate": "node -e \"const os=require('os'); const cmd=os.platform()==='win32'?'.\\\\node_modules\\\\.bin\\\\prisma.cmd migrate dev --name migration':'npx prisma migrate dev --name migration'; require('child_process').execSync(cmd, {stdio:'inherit'})\"",
+    "db:generate": "node -e \"const os=require('os'); const cmd=os.platform()==='win32'?'.\\\\node_modules\\\\.bin\\\\prisma.cmd generate':'npx prisma generate'; require('child_process').execSync(cmd, {stdio:'inherit'})\"",
+    "db:seed": "node prisma/seed.js",
+    "db:studio": "node -e \"const os=require('os'); const cmd=os.platform()==='win32'?'.\\\\node_modules\\\\.bin\\\\prisma.cmd studio':'npx prisma studio'; require('child_process').execSync(cmd, {stdio:'inherit'})\"",
+    "db:reset": "node -e \"const os=require('os'); const cmd=os.platform()==='win32'?'.\\\\node_modules\\\\.bin\\\\prisma.cmd migrate reset --force':'npx prisma migrate reset --force'; require('child_process').execSync(cmd, {stdio:'inherit'})\"",
+    "db:setup": "npm run db:generate && npm run db:migrate && npm run db:seed"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@prisma/client": "^5.7.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.7.1",
+    "nodemon": "^3.0.2"
+  }
+}
