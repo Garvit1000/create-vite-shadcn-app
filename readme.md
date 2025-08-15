@@ -1,6 +1,6 @@
 # Vite + React + Tailwind + shadcn/ui + Auth + Database
 
-A **zero-config CLI tool** to scaffold full-stack React applications with authentication and database integration. Build production-ready apps in seconds with **Clerk authentication** and **PostgreSQL database** support built-in.
+A **zero-config CLI tool** to scaffold full-stack React applications with authentication and database integration. Build production-ready apps in seconds with **Clerk authentication** and **PostgreSQL database** support built-in. adding more providers soon 
 
 ## 🚀 What's New in v2.0
 
